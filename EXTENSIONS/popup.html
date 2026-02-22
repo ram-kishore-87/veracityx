@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeracityX Analyzer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="gamification-banner" id="gamificationBanner">
+            <div class="rank-badge" id="rankBadge">Truth Seeker</div>
+            <div class="score-display">Score: <span id="totalScore">0</span><span class="score-denom">/20</span></div>
+            <div class="progress-container">
+                <div class="progress-bar" id="rankProgress" style="width: 10%;"></div>
+            </div>
+        </div>
+
+        <div class="settings" id="settingsPanel">
+            <label for="apiUrl">API URL:</label>
+            <input type="text" id="apiUrl" placeholder="http://127.0.0.1:8001">
+            <button id="saveSettings">Save Settings</button>
+        </div>
+
+        <div class="controls">
+            <button id="analyzeBtn" class="btn-primary">🔎 Analyze Current Page</button>
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="challengeModeToggle">
+                    <span class="slider round"></span>
+                </label>
+                <span>🎮 Challenge Mode</span>
+            </div>
+        </div>
+
+        <div class="manual-input-section">
+            <textarea id="manualInput"
+                placeholder="Paste article text or social media post here to analyze..."></textarea>
+            <button id="analyzeManualBtn" class="btn-secondary">✏️ Analyze Input Text</button>
+        </div>
+
+        <div id="results" class="results hidden">
+            <div id="loading" class="loading hidden">
+                <div class="loader-container">
+                    <div class="spinner"></div>
+                    <p>Scanning Narrative...</p>
+                </div>
+            </div>
+
+            <!-- Gamification Challenge Area -->
+            <div id="challengeArea" class="card challenge-card hidden">
+                <div class="card-title">
+                    <span>🎮</span>
+                    <h4>TITAN Challenge</h4>
+                </div>
+                <div id="challengeQuestionArea">
+                    <p id="challengeQuestion" class="challenge-question">--</p>
+                    <div id="challengeOptions" class="challenge-options">
+                        <!-- Options injected here -->
+                    </div>
+                </div>
+                <div id="challengeFeedback" class="challenge-feedback hidden">
+                    <p id="feedbackText">--</p>
+                    <button id="showResultsBtn" class="btn-outline-small">Reveal Results</button>
+                </div>
+            </div>
+
+            <div id="analysisResult" class="analysis-result hidden">
+                <div class="result-header">
+                    <div class="brand-badge">Audit Report</div>
+                    <button id="closeResult" class="close-btn">✕</button>
+                </div>
+
+                <!-- Card 1: Confidence Overview -->
+                <div class="card overview-card">
+                    <div class="card-title">
+                        <span class="status-icon" id="statusIcon">🛡️</span>
+                        <h4>Credibility Profile</h4>
+                    </div>
+                    <div class="overview-content">
+                        <div class="credibility-score">
+                            <div class="score-circle">
+                                <span id="credibilityScore">--</span>
+                                <small>Accuracy</small>
+                            </div>
+                        </div>
+                        <div class="overview-stats">
+                            <p id="credibilityRiskLabel" class="risk-label">Analyzing...</p>
+                            <div id="proInsight" class="pro-insight">--</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW: TITAN Cognitive Threats Card -->
+                <div class="card titan-card">
+                    <div class="card-title">
+                        <span>🧬</span>
+                        <h4>TITAN Intelligence</h4>
+                    </div>
+                    <div class="titan-intel-grid">
+                        <div class="intel-box">
+                            <label>Bot Signal</label>
+                            <div id="botProbValue" class="intel-val">--%</div>
+                        </div>
+                        <div class="intel-box">
+                            <label>Logic Threats</label>
+                            <div id="fallacyCountValue" class="intel-val">0</div>
+                        </div>
+                        <div class="intel-box">
+                            <label>Intensity</label>
+                            <div id="intensityValue" class="intel-val">--</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW V2: Fact Verification Card -->
+                <div id="factCheckCard" class="card fact-card hidden">
+                    <div class="card-title">
+                        <span>📡</span>
+                        <h4>Live Verification Matches</h4>
+                    </div>
+                    <div id="factCheckResults" class="fact-links">
+                        <!-- Links injected here -->
+                    </div>
+                </div>
+
+
+                <!-- Card 3: AI Audit Findings -->
+                <div class="card audit-card">
+                    <div class="card-title">
+                        <span>🔍</span>
+                        <h4>AI Logic Findings</h4>
+                    </div>
+                    <div id="recommendationsResult" class="recommendations-container">--</div>
+
+                    <div class="highlight-wrapper">
+                        <div class="highlight-box">
+                            <h5>Manipulative Language Detected</h5>
+                            <div id="highlightedText" class="text-preview">--</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Fact-Aligned Rewrite -->
+                <div class="card neutral-card">
+                    <div class="card-title">
+                        <span>🛡️</span>
+                        <h4>Fact-Aligned Rewrite</h4>
+                    </div>
+                    <div id="neutralText" class="text-preview neutral-text">--</div>
+                    <button id="copyNeutralBtn" class="btn-outline-small" style="margin-top: 10px;">📋 Copy
+                        Rewrite</button>
+                </div>
+            </div>
+
+            <div id="error" class="error-box hidden">
+                <p id="errorMessage">An error occurred</p>
+            </div>
+
+            <div id="historySection" class="history-section">
+                <div class="section-divider">
+                    <span>Recent History</span>
+                </div>
+                <div id="historyList" class="history-list">
+                    <!-- History items injected here -->
+                    <p class="empty-history">No recent analyses yet.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Connect to your VeracityX API to analyze content</p>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
