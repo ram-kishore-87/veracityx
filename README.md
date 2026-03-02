@@ -1,155 +1,211 @@
-# VeracityX Browser Extension
+🛡️ VeracityX
 
-A Chrome/Firefox browser extension that analyzes webpage content in real-time for misinformation, bias, and credibility.
+### Real-Time Misinformation & Credibility Detection Engine
 
-## Features
-
-✅ **One-Click Analysis** - Analyze any webpage content  
-✅ **Text Selection** - Analyze specific selected text  
-✅ **Real-time Detection** - Identifies misinformation patterns  
-✅ **Credibility Scoring** - Rates content 0-100  
-✅ **Sentiment & Emotion Analysis** - Detects emotional manipulation  
-✅ **Risk Flags** - Shows logical fallacies and red flags  
-✅ **Smart Recommendations** - Actionable insights for users  
-✅ **Text Neutralization** - Shows balanced version of content  
-
-## Installation
-
-### Chrome
-1. Download/clone this extension folder to your PC
-2. Open Chrome and go to: `chrome://extensions/`
-3. Enable **Developer Mode** (top right toggle)
-4. Click **Load unpacked**
-5. Select the `extension` folder
-6. Extension is now active!
-
-### Firefox
-1. Open Firefox and go to: `about:debugging#/runtime/this-firefox`
-2. Click **Load Temporary Add-on**
-3. Select `manifest.json` from the `extension` folder
-4. Extension is now active (until browser restart)
-
-## Setup
-
-### Step 1: Start VeracityX API Server
-```powershell
-cd d:\HACKATHON
-uvicorn main:app --reload --host 127.0.0.1 --port 8000
-```
-
-Server should show:
-```
-INFO:     Uvicorn running on http://127.0.0.1:8000
-```
-
-### Step 2: Configure Extension
-1. Click the VeracityX extension icon in your browser
-2. Enter your API URL (default: `http://127.0.0.1:8000`)
-3. Click **Save Settings**
-
-## Usage
-
-### Analyze Webpage Content
-1. Click the VeracityX icon
-2. Click **🔎 Analyze This Page**
-3. View comprehensive analysis
-
-### Analyze Selected Text
-1. Highlight/select any text on the page
-2. Click the VeracityX icon
-3. Click **✏️ Analyze Selected Text**
-4. See detailed credibility report
-
-## What Gets Analyzed?
-
-- **Credibility Score** (0-100) - Overall trustworthiness
-- **Sentiment** - Positive/Negative/Neutral polarity
-- **Emotions Detected** - Anger, Fear, Joy, Sadness levels
-- **Risk Flags** - Logical fallacies, unverified claims, emotional manipulation
-- **Misinformation Indicators** - Sensational language, ALL CAPS, excessive punctuation
-- **Recommendations** - Actionable insights
-- **Neutralized Text** - Balanced version of the content
-
-## Supported Browsers
-
-- ✅ Chrome (90+)
-- ✅ Edge (90+)
-- ✅ Firefox (109+)
-- ⚠️ Mobile (Limited support on Firefox Mobile, Chrome Mobile)
-
-## Troubleshooting
-
-### "Failed to connect to API"
-1. Make sure the backend server is running
-2. Verify API URL is correct in extension settings
-3. Check if server is on `http://127.0.0.1:8000`
-
-### "No content extracted"
-1. Try right-clicking and selecting "Analyze Selected Text"
-2. Some dynamic websites may require a moment to load
-
-### Extension not loading
-1. Try disabling/re-enabling the extension
-2. Clear extension storage: `chrome://extensions/` → Details → Storage → Clear
-
-## File Structure
-
-```
-extension/
-├── manifest.json      # Extension configuration
-├── popup.html         # UI interface
-├── popup.css          # Styling
-├── popup.js           # UI logic & API calls
-├── content.js         # Webpage interaction
-├── background.js      # Service worker
-└── icons/             # Extension icons (optional)
-```
-
-## Architecture
-
-```
-User opens webpage
-    ↓
-Clicks VeracityX extension
-    ↓
-Selects text or analyzes page content
-    ↓
-Content script extracts text
-    ↓
-Popup sends to VeracityX API
-    ↓
-API analyzes & returns results
-    ↓
-Extension displays analysis in popup UI
-```
-
-## API Endpoints Used
-
-- `POST /analyze` - Full analysis (sentiment, emotions, credibility, flags)
-- `POST /neutralize` - Text neutralization only
-- `GET /health` - Server health check
-
-## Privacy & Data
-
-- ✅ Extension runs locally in your browser
-- ✅ Content is sent only to YOUR API instance
-- ✅ No data sent to third parties
-- ✅ Results not stored permanently
-
-## Performance
-
-- Fast analysis on most text (< 1 second)
-- Works best with text under 1000 characters
-- Can handle dynamic content on most websites
-
-## Future Enhancements
-
-- 🔜 Multi-language support
-- 🔜 Custom word lists/rules
-- 🔜 Browser sync across devices
-- 🔜 Visual highlighting on webpages
-- 🔜 Share analysis reports
+> AI-powered browser extension that evaluates online content for credibility, bias, emotional manipulation, and misinformation — in real time.
 
 ---
 
-**Made with ❤️ by VeracityX Team**
+
+
+🌍 Why VeracityX?
+
+The internet is flooded with:
+
+* Sensational headlines
+* Emotional manipulation
+* Logical fallacies
+* Unverified claims
+* Polarized narratives
+
+Yet users lack **real-time credibility intelligence** inside their browser.
+
+VeracityX solves this by embedding an AI-powered credibility layer directly into Chrome and Firefox.
+
+---
+
+🧠 What Makes It Different?
+
+Unlike simple sentiment analyzers, VeracityX performs **multi-dimensional analysis**:
+
+| Dimension                 | What It Detects                                   |
+| ------------------------- | ------------------------------------------------- |
+| Credibility Score         | Overall trustworthiness (0–100)                   |
+| Sentiment Analysis        | Polarity detection                                |
+| Emotion Detection         | Anger, Fear, Joy, Sadness                         |
+| Logical Fallacies         | Emotional reasoning, overgeneralization           |
+| Misinformation Indicators | ALL CAPS, sensational tone, excessive punctuation |
+| Text Neutralization       | Balanced content rewriting                        |
+
+---
+
+🏗 System Architecture
+
+```
+User Browser
+   ↓
+Browser Extension (JS)
+   ↓
+Content Script (Text Extraction)
+   ↓
+FastAPI Backend
+   ↓
+NLP Processing Engine
+   ↓
+Credibility & Risk Evaluation Layer
+   ↓
+Structured JSON Response
+   ↓
+Interactive UI Rendering
+```
+
+---
+
+⚙️ Tech Stack
+
+### Frontend
+
+* JavaScript (ES6+)
+* Chrome Extension APIs
+* Firefox WebExtensions API
+* HTML5 / CSS3
+
+### Backend
+
+* FastAPI
+* Uvicorn
+* Python 3.10+
+* NLP Models (Sentiment + Emotion)
+
+---
+
+🧪 AI / NLP Pipeline
+
+1. Text Preprocessing
+
+   * Tokenization
+   * Noise removal
+   * Normalization
+
+2. Sentiment Classification
+
+   * Polarity scoring
+
+3. Emotion Detection
+
+   * Multi-label emotional probability distribution
+
+4. Credibility Heuristic Layer
+
+   * Rule-based scoring
+   * Linguistic signal detection
+   * Pattern-based misinformation flags
+
+5. Composite Credibility Score
+   Weighted aggregation of:
+
+   * Sentiment volatility
+   * Emotional intensity
+   * Risk flags
+   * Language patterns
+
+---
+
+📊 Performance
+
+| Metric             | Result                             |
+| ------------------ | ---------------------------------- |
+| Avg Response Time  | < 1s (≤1000 chars)                 |
+| Supported Browsers | Chrome 90+, Edge 90+, Firefox 109+ |
+| Deployment         | Local API (Privacy-first)          |
+
+---
+
+🔒 Privacy First Design
+
+* No third-party APIs
+* No cloud tracking
+* User-controlled backend
+* No persistent data storage
+
+VeracityX is designed as a **self-hosted credibility engine**.
+
+---
+
+📦 Installation
+
+1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/yourusername/veracityx.git
+cd veracityx
+```
+
+2️⃣ Start Backend
+
+```bash
+uvicorn main:app --reload --host 127.0.0.1 --port 8000
+```
+
+ 3️⃣ Load Extension (Chrome)
+
+* Go to `chrome://extensions/`
+* Enable Developer Mode
+* Click **Load Unpacked**
+* Select extension folder
+
+---
+📂 Project Structure
+
+```
+veracityx/
+│
+├── backend/
+│   ├── main.py
+│   ├── models/
+│   └── analyzers/
+│
+├── extension/
+│   ├── manifest.json
+│   ├── popup.js
+│   ├── content.js
+│   └── background.js
+│
+└── README.md
+```
+
+---
+
+🛣 Roadmap
+
+* [ ] Multi-language support
+* [ ] Transformer-based credibility classifier
+* [ ] Cloud deployment option
+* [ ] Real-time webpage highlighting
+* [ ] Model benchmarking dataset
+* [ ] Browser sync
+
+---
+📈 Future Research Direction
+
+VeracityX can evolve into:
+
+* Trust & Safety AI system
+* News verification engine
+* Social media misinformation detector
+* Enterprise content risk analysis tool
+
+---
+
+🏆 Hackathon Project
+
+Built during a competitive hackathon focused on AI-driven social impact tools.
+
+---
+
+👨‍💻 Author
+
+Ram Kishore L R
+BSc Computer Science (AI & ML) 
+---
+
